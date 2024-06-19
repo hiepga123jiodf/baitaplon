@@ -1,93 +1,375 @@
 # baitaplon
-baitaplon
-#CHƯƠNG TRÌNH QUẢN LÝ QUÁN BIA
-Mô tả bài toán quản lý : Bài toán quản lý quán bia yêu cầu xây dựng một hệ thống cơ sở dữ liệu để quản lý các hoạt động hằng ngày của quán bia. Hệ thống này cần phải xử lý thông tin về khách hàng, nhân viên, các loại bia, nguyên liệu, đơn hàng, bàn và các báo cáo doanh thu .
-##Những chức năng quản lý quán bia:
-1.Quản lý khách hàng .
-2.Quản lý nhân viên .
-3.Quản lý bia và nguyên liệu .
-4. Quản lý đơn hàng .
-5.Quản lý bàn .
-6, Báo cáo và thống kê .
-##Các thông tin liên quan đến quán bia:
-1.Thông tin khách hàng.
--Mã khách hàng.
--Tên khách hàng.
--Số điện thoại.
--Địa chỉ. 
--Lịch sử mua hàng.
--Yêu thích và phản hổi.
-2.Thông tin nhân viên.
--Mã nhân viên.
--Tên nhân viên.
--Chức vụ.
--Lương.
--Thông tin liên lạc.
--Ca làm việc.
--Hiệu suất công việc.
-3.Thông tin về bia.
--Mã bia.
--Tên bia.
--Loại bia.
--Giá.
--Số lượng tồn kho.
--Nhà cung cấp.
-4.Thông tin nguyên liệu.
--Mã nguyên liệu.
--Tên nguyên liệu.
--Số lượng tồn kho.
--Nhà cung cấp.
--Ngày nhập kho.
-5.Thông tin đơn hàng.
--Mã đơn hàng.
--Ngày đặt hàng.
--Mã khách hàng.
--Mã nhân viên.
--Tổng giá trị đơn hàng.
-6.Thông tin chi tiết đơn hàng.
--Mã đơn hàng
--Mã bia.
--Số lượng .
--Giá.
-7.Thông tin bàn.
--Mã bàn.
--Số bàn.
--Tình trạng.
--Sức chứa.
-8,Thông tin đặt bàn.
--Mã đặt bàn.
--Ngày và giờ đặt bàn.
--Mã khách hàng.
--Mã bàn.
-Như vậy, dựa theo những thông tin mà ta đã thu thập được chúng ta sẽ xây dựng các bảng đáp ứng yếu cầu quản lí quán bia Tạo các bảng như mô tả trong SQL sever: 
- 1.Bảng khách hàng CREATE TABLE KhachHang (MaKH INT PRIMARY KEY, TenKH NVARCHAR(100), SoDienThoai NVARCHAR(15), DiaChi NVARCHAR(255) );
+# CHƯƠNG TRÌNH QUẢN LÝ NHÂN VIÊN QUÁN BIA
+***
 
- 2.Bảng nhân viên CREATE TABLE NhanVien ( MaNV INT PRIMARY KEY, TenNV NVARCHAR(100), ChucVu NVARCHAR(50), Luong DECIMAL(18, 2), SoDienThoai NVARCHAR(15), Email NVARCHAR(100) ); 
+**Tác giả: Nguyễn Hoàng Hiệp**
 
-3.Bảng bia CREATE TABLE Bia ( MaBia INT PRIMARY KEY, TenBia NVARCHAR(100), LoaiBia NVARCHAR(50), Gia DECIMAL(18, 2), SoLuongTonKho INT );
+**MSSV:k215480106094**
 
-4.Bảng nguyên liệu CREATE TABLE NguyenLieu ( MaNL INT PRIMARY KEY, TenNL NVARCHAR(100), SoLuongTonKho INT, NhaCungCap NVARCHAR(100) ); 
+**Lớp:k57kmt**
 
-5.Bảng đơn hàng CREATE TABLE DonHang ( MaDH INT PRIMARY KEY, NgayDat DATE, MaKH INT, MaNV INT, FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH),  FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV) ); 
+**Ngày hoàn thành :19/6/2024
 
-6.Bảng chi tiết đơn hàng CREATE TABLE ChiTietDonHang ( MaDH INT, MaBia INT, SoLuong INT, Gia DECIMAL(18, 2), PRIMARY KEY (MaDH, MaBia), FOREIGN KEY (MaDH) REFERENCES DonHang(MaDH), FOREIGN KEY (MaBia) REFERENCES Bia(MaBia) ); 
+Mô tả bài toán quản lý : Quản lý nhân viên là một trong những phần quan trọng trong hoạt động của một quán bia. Việc theo dõi thông tin nhân viên, chấm công, lương và hóa đơn là các nhiệm vụ không thể thiếu để đảm bảo hoạt động trơn tru và hiệu quả. Bài toán này yêu cầu xây dựng một hệ quản trị cơ sở dữ liệu để quản lý các thông tin này.
+***
 
-7.Bảng bàn CREATE TABLE Ban ( MaBan INT PRIMARY KEY, TinhTrang NVARCHAR(50) ); 
+## NHỮNG CHỨC NĂNG QUẢN LÝ NHÂN VIÊN QUÁN BIA:
+1. Quản lý nhân viên
+- Thêm , sửa , xóa thông tin nhân viên
+- Lưu trữ và tra cứu thông tin nhân viên
+2. Quản lý phòng ban và chức vụ
+- Quản lý phòng ban
+- quản lý chức vụ
+3. Quản lý chấm công
+- Ghi nhận chấm công
+- Sửa , xóa thông tin chấm công
+- Tra cứu chấm công
+4. Quản lý lương
+- Tính lương thực tế
+- Cập nhật và tra cứu lương 
+5. Quản lý hóa đơn
+- Lập hóa đơn
+- Sửa , xóa hóa đơn
+- Tra cứu hóa đơn
+6. Báo cáo và thống kê
+- Báo cáo nhân viên
+- Báo cáo chấm công
+- Báo cáo lương
+- Báo cáo hóa đơn
+7. Bảo mật và phân quyền
+- Quản lý tài khoản người dùng
+- Phân quyền
+8. Giao diện người dùng
+- Giao diện quản lý
+- Giao diện nhân viên
+## Lên ý tưởng xây dựng các bảng quản lý quán bia:
 
-8.Bảng đặt bàn CREATE TABLE DatBan ( MaDatBan INT PRIMARY KEY, NgayDat DATETIME, MaKH INT, MaBan INT, FOREIGN KEY (MaKH) REFERENCES KhachHang(MaKH), FOREIGN KEY (MaBan) REFERENCES Ban(MaBan) );
+1. Bảng nhân viên: Mã nhân viên: MaNV (INT, Primary Key)Tên nhân viên: TenNV (NVARCHAR(50))Ngày sinh: NgaySinh (DATE)Giới tính: GioiTinh (NVARCHAR(10))Địa chỉ: DiaChi (NVARCHAR(100))Mã phòng ban: MaPhongBan(INT, Foreign Key từ bảng PhongBan)Mã chức vụ: MaChucVu (INT, Foreign Key từ bảng ChucVu)Lương cơ bản: LuongCoBan (DECIMAL(10, 2))
+2. Bảng phòng ban:Mã phòng ban: MaPhongBan (INT, Primary Key)Tên phòng ban: TenPhongBan (NVARCHAR(50))
+3. Bảng chức vụ: Mã chức vụ: MaChucVu (INT, Primary Key)Tên chức vụ: TenChucVu (NVARCHAR(50))Hệ số lương: HeSoLuong (DECIMAL(5, 2))
+4. Bảng chấm công: Mã nhân viên: MaNV (INT, Foreign Key từ bảng NhanVien)Ngày: Ngay (DATE)Số giờ làm: SoGioLam (INT)Primary Key: (MaNV, Ngay)
+5. Bảng lương: Mã nhân viên: MaNV (INT, Foreign Key từ bảng NhanVien)Tháng: Thang (INT)Năm: Nam (INT)Lương thực tế: LuongThucTe (DECIMAL(10, 2))Primary Key: (MaNV, Thang, Nam)
+6. Bảng hóa đơn: Mã hóa đơn: MaHD (INT, Primary Key)Mã nhân viên: MaNV (INT, Foreign Key từ bảng NhanVien)Ngày lập: NgayLap (DATE)Tổng tiền: TongTien (DECIMAL(15, 2))
+  
+Như vậy , dựa theo những thông tin mà ta đã thu thập được chúng ta sẽ xây dựng các bảng đáp ứng yêu cầu quản lý nhân viên quán bia.
 
-Thêm dữ liệu vào bảng.
+Tạo các bảng như mô tả trong SQL Sever :
+1. Bảng nhân viên
 
-1.Bảng khachhang INSERT INTO KhachHang (MaKH, TenKH, SoDienThoai, DiaChi) VALUES (1, N'Nguyễn Văn A', '0901234567', N'123 Đường ABC, TP.HCM'); INSERT INTO KhachHang (MaKH, TenKH, SoDienThoai, DiaChi) VALUES (2, N'Trần Thị B', '0987654321', N'456 Đường XYZ, Hà Nội'); 
+![image](https://github.com/hiepga123jiodf/baitaplon/assets/173077320/cebdb97e-4cca-48a1-ad1d-48ea169a8aa0)
 
-2.Bảng nhanvien INSERT INTO NhanVien (MaNV, TenNV, ChucVu, Luong, SoDienThoai, Email) VALUES (1, N'Phạm Văn C', N'Bồi bàn', 15000000, '0978123456', 'phamvanC@example.com'); INSERT INTO NhanVien (MaNV, TenNV, ChucVu, Luong, SoDienThoai, Email) VALUES (2, N'Nguyễn Thị D', N'Quản lý', 25000000, '0987654321', 'nguyenthid@example.com'); 
+2. Bảng phòng ban
 
-3.Bảng bia INSERT INTO Bia (MaBia, TenBia, LoaiBia, Gia, SoLuongTonKho) VALUES (1, N"Bia Sài Gòn", N'Lager', 25000, 100); INSERT INTO Bia (MaBia, TenBia, LoaiBia, Gia, SoLuongTonKho) VALUES (2, N"Bia Hà Nội", N'Lager', 23000, 80); 
+![image](https://github.com/hiepga123jiodf/baitaplon/assets/173077320/0d82da12-5ea1-4999-8205-204e91cd4e90)
 
-4.Bảng nguyenlieu INSERT INTO NguyenLieu (MaNL, TenNL, SoLuongTonKho, NhaCungCap) VALUES (1, N'Nguyên liệu A', 500, N'ABC Company'); INSERT INTO NguyenLieu (MaNL, TenNL, SoLuongTonKho, NhaCungCap) VALUES (2, N'Nguyên liệu B', 800, N'XYZ Supplier'); 
+3. Bảng lương
 
-5,Bảng donhang và chitietdonhang NSERT INTO DonHang (MaDH, NgayDat, MaKH, MaNV) VALUES (1, '2024-06-17', 1, 1); - INSERT INTO ChiTietDonHang (MaDH, MaBia, SoLuong, Gia) VALUES (1, 1, 2, 25000); INSERT INTO ChiTietDonHang (MaDH, MaBia, SoLuong, Gia) VALUES (1, 2, 3, 23000); 
+![image](https://github.com/hiepga123jiodf/baitaplon/assets/173077320/e99dfb75-5909-456f-91cd-3ea67444daf9)
 
-6.Bảng ban INSERT INTO Ban (MaBan, TinhTrang) VALUES (1, N'Trống'); INSERT INTO Ban (MaBan, TinhTrang) VALUES (2, N'Đã đặt trước'); INSERT INTO Ban (MaBan, TinhTrang) VALUES (3, N'Đang sử dụng'); 
+4. Bảng hóa đơn
 
-7.Bảng datban INSERT INTO DatBan (MaDatBan, NgayDat, MaKH, MaBan) VALUES (1, '2024-06-18 10:00:00', 2, 2); INSERT INTO DatBan (MaDatBan, NgayDat, MaKH, MaBan) VALUES (2, '2024-06-19 19:00:00', 1, 3); 
+![image](https://github.com/hiepga123jiodf/baitaplon/assets/173077320/e943d87f-ee10-4817-9f81-eaceffbb9321)
+
+5. Bảng chức vụ
+
+![image](https://github.com/hiepga123jiodf/baitaplon/assets/173077320/e57b4477-5df0-4e7d-83c3-1b35c9683669)
+
+6. Bảng chấm công
+
+![image](https://github.com/hiepga123jiodf/baitaplon/assets/173077320/5d760878-f280-42d1-96a5-69526a7eef04)
+
+Thâm dữ liệu vào các bảng
+1. Dữ liệu vào bảng NhanVieN
+```SQL
+
+CREATE TABLE NhanVien (
+    MaNV INT PRIMARY KEY,
+    TenNV NVARCHAR(50),
+    NgaySinh DATE,
+    GioiTinh NVARCHAR(10),
+    DiaChi NVARCHAR(100),
+    MaPhongBan INT,
+    MaChucVu INT,
+    LuongCoBan DECIMAL(10, 2)
+);
+```
+
+2. Dữ liệu vào bảng phòng ban
+```SQL
+CREATE TABLE PhongBan (
+    MaPhongBan INT PRIMARY KEY,
+    TenPhongBan NVARCHAR(50)
+);
+```
+
+3. Dữ liệu vào bảng chức vụ
+```SQL
+CREATE TABLE ChucVu (
+    MaChucVu INT PRIMARY KEY,
+    TenChucVu NVARCHAR(50),
+    HeSoLuong DECIMAL(5, 2)
+);
+```
+
+4. Dữ liệu vào bảng lương
+```SQL
+CREATE TABLE Luong (
+    MaNV INT,
+    Thang INT,
+    Nam INT,
+    LuongThucTe DECIMAL(10, 2),
+    PRIMARY KEY (MaNV, Thang, Nam),
+    FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
+);
+```
+
+5. Dữ liệu vào bảng chấm công
+```SQL
+CREATE TABLE ChamCong (
+    MaNV INT,
+    Ngay DATE,
+    SoGioLam INT,
+    PRIMARY KEY (MaNV, Ngay),
+    FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
+);
+```
+
+6. Dữ liệu vào bảng hóa đơn
+```SQL
+CREATE TABLE HoaDon (
+    MaHD INT PRIMARY KEY,
+    MaNV INT,
+    NgayLap DATE,
+    TongTien DECIMAL(15, 2),
+    FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV)
+);
+```
+
+## XÂY DỰNG CÁC THỦ TỰC THEO CÁC CHỨC NĂNG MONG MUỐN
+1. Thủ tục quản lý nhân viên
+  Thêm nhân viên
+```SQL
+CREATE PROCEDURE ThemNhanVien
+    @TenNV NVARCHAR(50),
+    @NgaySinh DATE,
+    @GioiTinh NVARCHAR(10),
+    @DiaChi NVARCHAR(100),
+    @MaPhongBan INT,
+    @MaChucVu INT,
+    @LuongCoBan DECIMAL(10, 2)
+AS
+BEGIN
+    INSERT INTO NhanVien (TenNV, NgaySinh, GioiTinh, DiaChi, MaPhongBan, MaChucVu, LuongCoBan)
+    VALUES (@TenNV, @NgaySinh, @GioiTinh, @DiaChi, @MaPhongBan, @MaChucVu, @LuongCoBan);
+END;
+```
+Cập nhật thông tin  nhân viên
+```SQL
+CREATE PROCEDURE CapNhatNhanVien
+    @MaNV INT,
+    @TenNV NVARCHAR(50),
+    @NgaySinh DATE,
+    @GioiTinh NVARCHAR(10),
+    @DiaChi NVARCHAR(100),
+    @MaPhongBan INT,
+    @MaChucVu INT,
+    @LuongCoBan DECIMAL(10, 2)
+AS
+BEGIN
+    UPDATE NhanVien
+    SET TenNV = @TenNV,
+        NgaySinh = @NgaySinh,
+        GioiTinh = @GioiTinh,
+        DiaChi = @DiaChi,
+        MaPhongBan = @MaPhongBan,
+        MaChucVu = @MaChucVu,
+        LuongCoBan = @LuongCoBan
+    WHERE MaNV = @MaNV;
+END;
+```
+Xóa nhân viên
+```SQL
+CREATE PROCEDURE XoaNhanVien
+    @MaNV INT
+AS
+BEGIN
+    DELETE FROM NhanVien
+    WHERE MaNV = @MaNV;
+END;
+```
+
+2. Thủ tục quanr lý chấm công
+Ghi nhận chấm công
+```SQL
+CREATE PROCEDURE GhiNhanChamCong
+    @MaNV INT,
+    @Ngay DATE,
+    @SoGioLam INT
+AS
+BEGIN
+    INSERT INTO ChamCong (MaNV, Ngay, SoGioLam)
+    VALUES (@MaNV, @Ngay, @SoGioLam);
+END;
+```
+Cập nhật chấm công
+```SQL
+CREATE PROCEDURE CapNhatChamCong
+    @MaNV INT,
+    @Ngay DATE,
+    @SoGioLam INT
+AS
+BEGIN
+    UPDATE ChamCong
+    SET SoGioLam = @SoGioLam
+    WHERE MaNV = @MaNV AND Ngay = @Ngay;
+END;
+```
+Xóa chấm công
+```SQL
+CREATE PROCEDURE XoaChamCong
+    @MaNV INT,
+    @Ngay DATE
+AS
+BEGIN
+    DELETE FROM ChamCong
+    WHERE MaNV = @MaNV AND Ngay = @Ngay;
+END;
+```
+
+3. Thủ tục tính lương
+ Tính lương thức tế
+```SQL
+CREATE PROCEDURE TinhLuongThucTe
+    @MaNV INT,
+    @Thang INT,
+    @Nam INT
+AS
+BEGIN
+    DECLARE @SoGioLam INT;
+    DECLARE @LuongCoBan DECIMAL(10, 2);
+    DECLARE @HeSoLuong DECIMAL(5, 2);
+    DECLARE @LuongThucTe DECIMAL(10, 2);
+
+    SELECT @SoGioLam = SUM(SoGioLam), @LuongCoBan = LuongCoBan, @HeSoLuong = HeSoLuong
+    FROM ChamCong cc
+    JOIN NhanVien nv ON cc.MaNV = nv.MaNV
+    JOIN ChucVu cv ON nv.MaChucVu = cv.MaChucVu
+    WHERE MONTH(Ngay) = @Thang AND YEAR(Ngay) = @Nam AND cc.MaNV = @MaNV
+    GROUP BY LuongCoBan, HeSoLuong;
+
+    SET @LuongThucTe = @SoGioLam * @HeSoLuong * @LuongCoBan;
+
+    INSERT INTO Luong (MaNV, Thang, Nam, LuongThucTe)
+    VALUES (@MaNV, @Thang, @Nam, @LuongThucTe);
+END;
+```
+
+4. Thủ tực quản lý hóa đơn
+   Lập hóa đơn
+   ```SQL
+   CREATE PROCEDURE LapHoaDon
+    @MaNV INT,
+    @NgayLap DATE,
+    @TongTien DECIMAL(15, 2)
+   AS
+   BEGIN
+    INSERT INTO HoaDon (MaNV, NgayLap, TongTien)
+    VALUES (@MaNV, @NgayLap, @TongTien);
+   END;
+   ```
+   Cập nhật hóa đơn
+   ```SQL
+   CREATE PROCEDURE CapNhatHoaDon
+    @MaHD INT,
+    @MaNV INT,
+    @NgayLap DATE,
+    @TongTien DECIMAL(15, 2)
+    AS
+   BEGIN
+    UPDATE HoaDon
+    SET MaNV = @MaNV,
+        NgayLap = @NgayLap,
+        TongTien = @TongTien
+    WHERE MaHD = @MaHD;
+   END;
+   ```
+   Xóa hóa đơn
+   ```SQL
+   CREATE PROCEDURE XoaHoaDon
+    @MaHD INT
+   AS
+   BEGIN
+    DELETE FROM HoaDon
+    WHERE MaHD = @MaHD;
+   END;
+   ```
+
+   5. Thủ tục quản lý đặt bàn
+      Đặt bàn
+      ```SQL
+      CREATE PROCEDURE DatBan
+      @MaKH INT,
+      @NgayDat DATE,
+      @ThoiGianDat TIME,
+      @SoLuongKhach INT
+      AS
+      BEGIN
+      INSERT INTO DatBan (MaKH, NgayDat, ThoiGianDat, SoLuongKhach)
+      VALUES (@MaKH, @NgayDat, @ThoiGianDat, @SoLuongKhach);
+      END;
+      ```
+      Cập nhật đặt bàn
+      ```SQL
+      CREATE PROCEDURE CapNhatDatBan
+      @MaDB INT,
+      @MaKH INT,
+      @NgayDat DATE,
+      @ThoiGianDat TIME,
+      @SoLuongKhach INT
+      AS
+      BEGIN
+      UPDATE DatBan
+      SET MaKH = @MaKH,
+        NgayDat = @NgayDat,
+        ThoiGianDat = @ThoiGianDat,
+        SoLuongKhach = @SoLuongKhach
+      WHERE MaDB = @MaDB;
+      END;
+      ```
+      Xóa đặt bàn
+      ```SQL
+      CREATE PROCEDURE XoaDatBan
+      @MaDB INT
+      AS
+      BEGIN
+      DELETE FROM DatBan
+      WHERE MaDB = @MaDB;
+      END;
+      ```
+      Chương trình quản lý nhân viên quán bia được xây dựng bằng SQL đóng vai trò quan trọng trong việc tối ưu hoá và quản lý hiệu quả các hoạt động kinh doanh của quán. Bằng cách tổ chức thông tin nhân viên, quản lý chấm công, tính lương, hóa đơn và đặt bàn, chương trình không chỉ giúp cải thiện trải nghiệm khách hàng mà còn hỗ trợ quản lý đưa ra các quyết định chiến lược dựa trên dữ liệu và phân tích. Với vai trò đa năng và chi tiết, chương trình giúp quán bia tối ưu hoá hoạt động và nâng cao hiệu quả kinh doanh trong môi trường cạnh tranh ngày càng gay gắt.
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
